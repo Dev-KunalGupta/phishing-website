@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>PhishGuard AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="/" class="logo">
+            <svg class="logo-icon" viewBox="0 0 24 24" fill="none">
+                <path d="M12 2L4 6V11C4 16 7.5 20 12 22C16.5 20 20 16 20 11V6L12 2Z" fill="url(#shieldGradient)" />
+                <path d="M8.5 12.5L11 15L16 9.5" stroke="white" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                <defs>
+                    <linearGradient id="shieldGradient" x1="0" y1="0" x2="24" y2="24">
+                        <stop offset="0%" stop-color="#3b82f6" />
+                        <stop offset="100%" stop-color="#2563eb" />
+                    </linearGradient>
+                </defs>
+            </svg>
+
+            <span class="brand">PhishGuard AI</span>
+        </a>
+
+        <div class="nav-right">
+            <div class="nav-links">
+                <a href="#">Awareness</a>
+                <a href="#">Community</a>
+                <a href="/report">Report</a>
+                <a href="#about">About</a>
+
+
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="profile">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2" />
+                    <path d="M4 20C4 16 8 14 12 14C16 14 20 16 20 20" stroke="currentColor" stroke-width="2" />
+                </svg>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="trust-badge">
+                99% Detection Accuracy • Hybrid Intelligence
+            </div>
+
+            <h1>AI-Powered Phishing Detection</h1>
+
+            <p>
+                Analyze URLs, QR codes and email content instantly using
+                hybrid Machine Learning and rule-based intelligence.
+            </p>
+
+            <form action="/analyze" method="POST" class="search-box">
+                <input type="text" id="urlInput" name="url" required>
+                <button type="submit">
+                    Detect
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="white" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </form>
+
+        </div>
+
+    </section>
+
+    <section class="features">
+
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="9" stroke="#2563eb" stroke-width="2" />
+                    <path d="M8 12H16M12 8V16" stroke="#2563eb" stroke-width="2" />
+                </svg>
+            </div>
+            <h3>Hybrid ML + Rule Engine</h3>
+            <p>Combines XGBoost machine learning with expert-driven rule logic.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M12 2V6M12 12L16 14" stroke="#2563eb" stroke-width="2" />
+                    <circle cx="12" cy="12" r="9" stroke="#2563eb" stroke-width="2" />
+                </svg>
+            </div>
+            <h3>Real-Time Risk Scoring</h3>
+            <p>Generates dynamic 0–100 risk scores with classification output.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M4 4H20V16H4Z" stroke="#2563eb" stroke-width="2" />
+                    <path d="M8 20H16" stroke="#2563eb" stroke-width="2" />
+                </svg>
+            </div>
+            <h3>Explainable AI</h3>
+            <p>Clear breakdown of detected risk factors and recommendations.</p>
+        </div>
+
+    </section>
+
+    <section id="about" class="about-section">
+
+    <div class="about-container">
+
+        <!-- LEFT CONTENT -->
+        <div class="about-left">
+            <h2>About PhishGuard AI</h2>
+
+            <p>
+                PhishGuard AI is a hybrid phishing detection platform
+                designed to protect users from malicious websites,
+                fraudulent QR codes, and phishing-based email attacks.
+            </p>
+
+            <p>
+                Our system combines Machine Learning (XGBoost) with
+                expert-driven rule intelligence to generate real-time
+                risk scores (0–100) and provide explainable security insights.
+            </p>
+
+            <p>
+                The platform is built for clarity, transparency,
+                and reliability — ensuring users understand not just
+                the result, but the reasoning behind it.
+            </p>
+        </div>
+
+        <!-- RIGHT CONTENT (CONTACT) -->
+        <div class="about-right">
+
+            <div class="contact-card">
+                <h3>Contact Us</h3>
+
+                <div class="contact-item">
+                    <strong>Email:</strong>
+                    <span>support@phishguardai.com</span>
+                </div>
+
+                <div class="contact-item">
+                    <strong>Phone:</strong>
+                    <span>+91 98765 43210</span>
+                </div>
+
+                <div class="contact-item">
+                    <strong>Location:</strong>
+                    <span>Noida, India</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+    <footer class="footer">
+    <div class="footer-left">
+        <span class="brand">PhishGuard</span>
+        <span>© PhishGuard Private Ltd. 2026</span>
+    </div>
+
+    <div class="footer-right">
+        <a href="#">X</a>
+        <a href="#">Facebook</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">Instagram</a>
+    </div>
+</footer>
+
+
+
+    <script>
+        const texts = [
+            "Paste suspicious URL here...",
+            "Try https://example.com",
+            "Scan before you click..."
+        ];
+
+        const input = document.getElementById("urlInput");
+
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function typeEffect() {
+            const currentText = texts[textIndex];
+
+            if (!isDeleting) {
+                input.placeholder = currentText.substring(0, charIndex + 1);
+                charIndex++;
+
+                if (charIndex === currentText.length) {
+                    setTimeout(() => isDeleting = true, 1500);
+                }
+            } else {
+                input.placeholder = currentText.substring(0, charIndex - 1);
+                charIndex--;
+
+                if (charIndex === 0) {
+                    isDeleting = false;
+                    textIndex = (textIndex + 1) % texts.length;
+                }
+            }
+
+            setTimeout(typeEffect, isDeleting ? 40 : 60);
+        }
+
+        typeEffect();
+    </script>
+
+</body>
+
+</html>

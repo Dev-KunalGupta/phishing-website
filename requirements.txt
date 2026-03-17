@@ -1,0 +1,10 @@
+Flask==3.1.2
+gunicorn==25.1.0
+numpy==2.4.2
+pandas==3.0.1
+scikit-learn==1.8.0
+xgboost==3.2.0
+joblib==1.5.3
+opencv-python==4.13.0.92
+pillow==12.1.1
+reportlab==4.4.10

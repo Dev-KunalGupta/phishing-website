@@ -4,7 +4,7 @@ from engine.ml_detector import predict_ml_probability
 from engine.risk_calculator import calculate_final_risk
 from engine.explanation_engine import generate_explanation
 
-url = "https://mail.google.com/mail/u/0/#inbox"
+url = "https://mail.google.com"
 
 
 # Step 1: Extract features

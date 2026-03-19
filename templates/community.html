@@ -2,11 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Report Suspicious Link - PhishGuard AI</title>
+    <title>Community - PhishGuard AI</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
 
+<!-- NAVBAR -->
 <nav class="navbar">
         <a href="/" class="logo">
             <svg class="logo-icon" viewBox="0 0 24 24" fill="none">
@@ -68,50 +70,44 @@
         </div>
     </nav>
 
-<section class="report-section">
+<!-- MAIN -->
+<div class="community-container">
 
-    <div class="report-container">
+    <h1>Community Feed</h1>
 
-        <div class="report-left">
-            <h1>Report a Suspicious Link</h1>
+    <!-- POST BOX -->
+    <div class="post-box">
+        <form method="POST" action="/create_post">
+            <textarea name="content" placeholder="Share a suspicious URL or experience..." required></textarea>
+            <button type="submit">Post</button>
+        </form>
+    </div>
 
-            <form method="POST" action="/submit-report" class="report-form">
+    <!-- POSTS -->
+    <div class="post-list">
 
-                <label>URL *</label>
-                <input type="text" name="url" placeholder="Enter the URL" required>
+        {% for post in posts %}
+        <div class="post-card">
 
-                <label>Description</label>
-                <textarea name="description" rows="4"></textarea>
+            <p class="post-content">
+                <strong>{{ post.user.username }}</strong>
+<p>{{ post.content }}</p>
+            </p>
 
-                <label>Observation</label>
-                <textarea name="observation" rows="4"></textarea>
+            <div class="post-meta">
+                <span>Posted on {{ post.created_at.strftime("%d %b %Y, %H:%M") }}</span>
+            </div>
 
-                <button type="submit" class="primary-btn">Submit</button>
-
-            </form>
         </div>
+        {% endfor %}
 
-        <div class="report-right">
-            <!-- Optional illustration space -->
-        </div>
+        {% if posts|length == 0 %}
+        <p class="no-posts">No posts yet. Be the first to share.</p>
+        {% endif %}
 
     </div>
 
-</section>
-
-<footer class="footer">
-    <div class="footer-left">
-        <span class="brand">PhishGuard</span>
-        <span>© PhishGuard Private Ltd. 2026</span>
-    </div>
-
-    <div class="footer-right">
-        <a href="#">X</a>
-        <a href="#">Facebook</a>
-        <a href="#">LinkedIn</a>
-        <a href="#">Instagram</a>
-    </div>
-</footer>
+</div>
 
 </body>
 </html>

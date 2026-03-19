@@ -4,7 +4,7 @@ import numpy as np
 from PIL import Image
 import os
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request,  redirect, send_file
 from engine.feature_extractor import extract_url_features
 from engine.rule_engine import calculate_rule_risk
 from engine.ml_detector import predict_ml_probability
@@ -13,7 +13,19 @@ from engine.explanation_engine import generate_explanation
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 
+from database import db
+
 app = Flask(__name__)
+
+# CONFIG FIRST
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///phishguard.db"
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+# THEN INIT
+db.init_app(app)
+
+# 🔥 IMPORT MODELS AFTER INIT (CRITICAL)
+from models.db_models import ScanHistory, ReportedURL, User, Post
 
 @app.route("/")
 def home():
@@ -22,6 +34,113 @@ def home():
 @app.route("/report")
 def report():
     return render_template("report.html")
+
+@app.route("/awareness")
+def awareness():
+    return render_template("awareness.html")
+
+@app.route("/community")
+def community():
+    if "user_id" not in session:
+        return redirect("/login_page")
+
+    posts = Post.query.order_by(Post.created_at.desc()).all()
+    return render_template("community.html", posts=posts)
+
+@app.route("/login_page")
+def login_page():
+    if "user_id" in session:
+        return redirect("/community")
+    return render_template("login.html")
+
+@app.route("/register_page")
+def register_page():
+    return render_template("register.html")
+
+@app.route("/register", methods=["POST"])
+def register():
+    from models.db_models import User
+
+    username = request.form.get("username")
+    email = request.form.get("email")
+    password = request.form.get("password")
+
+    # Basic validation
+    if not username or not email or not password:
+        return "All fields are required"
+
+    # Check if user exists
+    existing_user = User.query.filter_by(email=email).first()
+    if existing_user:
+        return "User already exists"
+
+    user = User(
+        username=username,
+        email=email,
+        password=password
+    )
+
+    db.session.add(user)
+    db.session.commit()
+
+    return redirect("/login_page")
+
+from flask import session
+
+app.secret_key = "secret123"  # REQUIRED
+
+@app.route("/login", methods=["POST"])
+def login():
+    from models.db_models import User
+
+    email = request.form.get("email")
+    password = request.form.get("password")
+
+    if not email or not password:
+        return "Missing credentials"
+
+    user = User.query.filter_by(email=email).first()
+
+    if not user:
+        return "User not found"
+
+    if user.password != password:
+        return "Incorrect password"
+
+    # Login success
+    session["user_id"] = user.id
+    session["username"] = user.username
+
+    return redirect("/community")
+    
+
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/")
+
+
+@app.route("/create_post", methods=["POST"])
+def create_post():
+
+    if "user_id" not in session:
+        return redirect("/login_page")
+
+    content = request.form.get("content")
+
+    if not content:
+        return redirect("/community")
+
+    post = Post(
+        content=content,
+        user_id=session["user_id"]
+    )
+
+    db.session.add(post)
+    db.session.commit()
+
+    return redirect("/community")
 
 @app.route("/analyze_qr", methods=["POST"])
 def analyze_qr():
@@ -48,9 +167,14 @@ def analyze_qr():
 
     features = extract_url_features(qr_url)
     ml_prob = predict_ml_probability(features)
-    rule_score = calculate_rule_score(features)
+    rule_score = calculate_rule_risk(features)
     result = calculate_final_risk(ml_prob, rule_score, features)
-    explanation = generate_explanation(features)
+    explanation = generate_explanation(
+    features,
+    rule_score,
+    result["final_risk"],
+    result["classification"]
+)
 
     return render_template("result.html",
                            url=qr_url,

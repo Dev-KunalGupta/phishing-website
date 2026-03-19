@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Report Suspicious Link - PhishGuard AI</title>
+    <title>Register - PhishGuard AI</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
@@ -68,50 +68,32 @@
         </div>
     </nav>
 
-<section class="report-section">
+<div class="auth-wrapper">
 
-    <div class="report-container">
+    <div class="auth-card">
 
-        <div class="report-left">
-            <h1>Report a Suspicious Link</h1>
+        <h2>Create Account</h2>
+        <p class="auth-subtext">Join the PhishGuard community</p>
 
-            <form method="POST" action="/submit-report" class="report-form">
+        <form method="POST" action="/register">
 
-                <label>URL *</label>
-                <input type="text" name="url" placeholder="Enter the URL" required>
+            <input type="text" name="username" placeholder="Username" required>
 
-                <label>Description</label>
-                <textarea name="description" rows="4"></textarea>
+            <input type="email" name="email" placeholder="Email address" required>
 
-                <label>Observation</label>
-                <textarea name="observation" rows="4"></textarea>
+            <input type="password" name="password" placeholder="Password" required>
 
-                <button type="submit" class="primary-btn">Submit</button>
+            <button type="submit">Register</button>
 
-            </form>
-        </div>
+        </form>
 
-        <div class="report-right">
-            <!-- Optional illustration space -->
-        </div>
+        <p class="auth-switch">
+            Already have an account? <a href="/login_page">Login</a>
+        </p>
 
     </div>
 
-</section>
-
-<footer class="footer">
-    <div class="footer-left">
-        <span class="brand">PhishGuard</span>
-        <span>© PhishGuard Private Ltd. 2026</span>
-    </div>
-
-    <div class="footer-right">
-        <a href="#">X</a>
-        <a href="#">Facebook</a>
-        <a href="#">LinkedIn</a>
-        <a href="#">Instagram</a>
-    </div>
-</footer>
+</div>
 
 </body>
 </html>

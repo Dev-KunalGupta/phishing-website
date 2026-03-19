@@ -2,6 +2,7 @@ import re
 import math
 from urllib.parse import urlparse
 import pandas as pd
+import tldextract
 
 # Load top domains once
 try:
@@ -10,6 +11,7 @@ try:
 except:
     TOP_DOMAINS = set()
 
+
 def calculate_entropy(domain):
     if not domain:
         return 0
@@ -17,19 +19,18 @@ def calculate_entropy(domain):
     entropy = -sum([p * math.log2(p) for p in prob])
     return entropy
 
+
 def extract_url_features(url):
 
     parsed = urlparse(url)
-    domain = parsed.netloc.lower()
 
-    # Extract root domain safely
-    if "." in domain:
-        parts = domain.split(".")
-        if len(parts) >= 2:
-            root_domain = parts[-2] + "." + parts[-1]
-        else:
-            root_domain = domain
-    else:
+    # 🔥 FIX: Proper domain extraction
+    ext = tldextract.extract(url)
+    domain = (ext.subdomain + "." + ext.domain + "." + ext.suffix).strip(".")
+    root_domain = ext.domain + "." + ext.suffix
+
+    # Handle empty cases
+    if root_domain == ".":
         root_domain = domain
 
     is_popular = 1 if root_domain in TOP_DOMAINS else 0
@@ -62,14 +63,14 @@ def extract_url_features(url):
     ]
     features["suspicious_keyword"] = 1 if any(word in url.lower() for word in suspicious_keywords) else 0
 
-    # Suspicious TLD
+    # Suspicious TLDs
     suspicious_tlds = [".xyz", ".tk", ".ml", ".ga", ".cf"]
-    features["suspicious_tld"] = 1 if any(domain.endswith(tld) for tld in suspicious_tlds) else 0
+    features["suspicious_tld"] = 1 if any(root_domain.endswith(tld) for tld in suspicious_tlds) else 0
 
-    # Entropy
-    features["domain_entropy"] = calculate_entropy(domain)
+    # Entropy (only root domain, not full)
+    features["domain_entropy"] = calculate_entropy(root_domain)
 
-    # 🔥 NEW FEATURE
+    # 🔥 FIXED POPULAR DOMAIN FEATURE
     features["is_popular_domain"] = is_popular
 
     return features

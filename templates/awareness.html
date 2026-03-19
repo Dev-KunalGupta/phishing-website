@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Phishing Awareness - PhishGuard AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <a href="/" class="logo">
+            <svg class="logo-icon" viewBox="0 0 24 24" fill="none">
+                <path d="M12 2L4 6V11C4 16 7.5 20 12 22C16.5 20 20 16 20 11V6L12 2Z" fill="url(#shieldGradient)" />
+                <path d="M8.5 12.5L11 15L16 9.5" stroke="white" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                <defs>
+                    <linearGradient id="shieldGradient" x1="0" y1="0" x2="24" y2="24">
+                        <stop offset="0%" stop-color="#3b82f6" />
+                        <stop offset="100%" stop-color="#2563eb" />
+                    </linearGradient>
+                </defs>
+            </svg>
+
+            <span class="brand">PhishGuard AI</span>
+        </a>
+
+        <div class="nav-right">
+            <div class="nav-links">
+                <a href="/awareness">Awareness</a>
+                <a href="/community">Community</a>
+                <a href="/report">Report</a>
+                <a href="#about">About</a>
+
+
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="profile" onclick="toggleMenu()">
+
+                <!-- USER ICON WITH INITIAL -->
+                <div class="profile-icon">
+                    {% if session.get("username") %}
+                    {{ session.get("username")[0].upper() }}
+                    {% else %}
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2" />
+                        <path d="M4 20C4 16 8 14 12 14C16 14 20 16 20 20" stroke="currentColor" stroke-width="2" />
+                    </svg>
+                    {% endif %}
+                </div>
+
+                <!-- DROPDOWN -->
+                <div class="profile-menu" id="profileMenu">
+
+                    {% if session.get("user_id") %}
+                    <p class="username">{{ session.get("username") }}</p>
+                    <a href="/community">Community</a>
+                    <a href="/logout">Logout</a>
+                    {% else %}
+                    <a href="/login_page">Login</a>
+                    <a href="/register_page">Register</a>
+                    {% endif %}
+
+                </div>
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="awareness-container">
+
+        <h1>Phishing Awareness</h1>
+
+        <p class="intro">
+            Phishing has evolved into a global epidemic, with attackers now deploying over 3.4 billion malicious emails
+            every single day. Recent data from 2025 shows a staggering 3.8 million reported phishing attacks annually, a
+            volume driven largely by the integration of generative AI, which has boosted the effectiveness of fraudulent
+            messages by over 400%. These attacks are no longer just simple emails; they have diversified into "smishing"
+            (SMS), "vishing" (voice), and "quishing" (malicious QR codes), targeting everything from social media
+            credentials to corporate financial data.
+            <br>
+            In 2025, global phishing activity remains at a historically high "plateau," with approximately 3.8 million
+            reported phishing attacks occurring throughout the year. On a daily basis, it is estimated that 3.4 billion
+            malicious emails (including phishing, spam, and bulk) are sent worldwide.
+
+            <br>
+            Recent Global Case Numbers
+            According to quarterly data from the Anti-Phishing Working Group (APWG), the number of unique phishing
+            attacks (sites) has consistently hovered near or above one million per quarter.
+        </p>
+
+        <h2> What is Phishing?</h2>
+        <p class="intro">
+            “Phishing” refers to an attempt to steal sensitive information, typically in the form of usernames,
+            passwords, credit card numbers, bank account information, or other important data in order to utilize or
+            sell the stolen information. By masquerading as a reputable source with an enticing request, an attacker
+            lures in the victim in order to trick them, similar to how a fisherman uses bait to catch a fish.
+            <br>
+            Phishing is a social engineering cyberattack where attackers impersonate legitimate entities via email,
+            text, or calls to deceive individuals into revealing sensitive information like passwords, credit card
+            numbers, or installing malware.
+
+            <br>
+            Phishing is a cybercrime where attackers impersonate trusted entities via email, text, or calls to deceive
+            individuals into revealing sensitive information like passwords or financial data. These attacks often
+            create urgency or fear to manipulate users.
+        </p>
+
+        <!-- TYPES -->
+        <h2>Common Phishing Types</h2>
+
+        <div class="features">
+
+            <div class="feature-card">
+                <h3>Email Phishing</h3>
+                <p>This remains the #1 delivery method for malware, accounting for 91% of all cyberattacks. In 2024, the
+                    average person received roughly 14 malicious emails per month. A major shift in this category is the
+                    use of AI-enhanced language, which has eliminated the classic "poor grammar" red flag, making these
+                    emails nearly indistinguishable from official corporate communications.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <h3>QR Phishing (Quishing)</h3>
+                <p>Quishing saw a 427% increase in 2024–2025 because QR codes bypass traditional email security filters
+                    that scan text and links. Attackers often place physical stickers over legitimate QR codes on
+                    parking meters, restaurant menus, or charging stations. Once scanned, they lead to "CSS-based" fake
+                    login screens designed specifically to steal mobile session tokens.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <h3>URL Spoofing (Typosquatting)
+                </h3>
+                <p>Beyond just swapping letters (like g00gle.com), attackers now use "homograph attacks" using
+                    look-alike characters from different alphabets (e.g., a Cyrillic "а" instead of a Latin "a").
+                    Research shows that users are 70% more likely to click a spoofed URL if it includes a familiar brand
+                    name followed by a trusted keyword like -support.com or -verify.net.</p>
+            </div>
+
+        </div>
+
+        <!-- HOW IT WORKS -->
+        <h2>How Phishing Attacks Work</h2>
+
+        <p>
+            Attackers create fake websites or messages that mimic trusted platforms. Users click links and enter
+            sensitive data, which gets captured by attackers.
+        </p>
+
+        <!-- EXAMPLES -->
+        <h2>Real Phishing Examples</h2>
+
+        <div class="example-box">
+            <p><strong>Fake:</strong> http://paytm-login-security.com</p>
+            <p><strong>Issue:</strong> Extra words + HTTP</p>
+            <p><strong>Real:</strong> https://paytm.com</p>
+        </div>
+
+        <div class="example-box">
+            <p><strong>Fake:</strong> http://amaz0n-support.net</p>
+            <p><strong>Issue:</strong> '0' instead of 'o'</p>
+            <p><strong>Real:</strong> https://amazon.in</p>
+        </div>
+
+        <!-- IDENTIFY -->
+        <h2>How to Identify Phishing</h2>
+
+        <ul class="checklist">
+            <li>Check domain spelling carefully</li>
+            <li>Avoid unknown links</li>
+            <li>Look for HTTPS</li>
+            <li>Beware of urgency</li>
+            <li>Verify sender identity</li>
+        </ul>
+
+        <!-- SAFETY -->
+        <h2>Stay Safe</h2>
+
+        <p>Always verify links before clicking.</p>
+        <p>Use PhishGuard AI for analysis.</p>
+        <p>Never share passwords or OTPs.</p>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-left">
+            <span class="brand">PhishGuard</span>
+            <span>© PhishGuard Private Ltd. 2026</span>
+        </div>
+
+        <div class="footer-right">
+            <a href="#">X</a>
+            <a href="#">Facebook</a>
+            <a href="#">LinkedIn</a>
+            <a href="#">Instagram</a>
+        </div>
+    </footer>
+
+</body>
+
+</html>

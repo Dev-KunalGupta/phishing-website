@@ -1,7 +1,6 @@
 from app import app
 from database import db
 
-# 🔥 IMPORTANT: import models
 from models.db_models import ScanHistory, ReportedURL
 
 with app.app_context():

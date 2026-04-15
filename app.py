@@ -1,10 +1,7 @@
 import cv2
-import numpy as np
-
-from PIL import Image
 import os
 
-from flask import Flask, render_template, request,  redirect, send_file
+from flask import Flask, render_template, request, redirect, send_file, session
 from engine.feature_extractor import extract_url_features
 from engine.rule_engine import calculate_rule_risk
 from engine.ml_detector import predict_ml_probability
@@ -25,15 +22,20 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db.init_app(app)
 
 # 🔥 IMPORT MODELS AFTER INIT (CRITICAL)
-from models.db_models import ScanHistory, ReportedURL, User, Post
+from models.db_models import User, Post
 
 @app.route("/")
+@app.route("/home")
 def home():
     return render_template("index.html")
 
 @app.route("/report")
 def report():
     return render_template("report.html")
+
+@app.route("/qr-scan")
+def qr_scan():
+    return render_template("qr_scan.html")
 
 @app.route("/awareness")
 def awareness():
@@ -43,9 +45,7 @@ def awareness():
 def community():
     if "user_id" not in session:
         return redirect("/login_page")
-
-    posts = Post.query.order_by(Post.created_at.desc()).all()
-    return render_template("community.html", posts=posts)
+    return render_template("community.html")
 
 @app.route("/login_page")
 def login_page():
@@ -59,8 +59,6 @@ def register_page():
 
 @app.route("/register", methods=["POST"])
 def register():
-    from models.db_models import User
-
     username = request.form.get("username")
     email = request.form.get("email")
     password = request.form.get("password")
@@ -85,14 +83,10 @@ def register():
 
     return redirect("/login_page")
 
-from flask import session
-
 app.secret_key = "secret123"  # REQUIRED
 
 @app.route("/login", methods=["POST"])
 def login():
-    from models.db_models import User
-
     email = request.form.get("email")
     password = request.form.get("password")
 

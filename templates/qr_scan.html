@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}QR Scan - PhishGuard AI{% endblock %}
+{% block content %}
+<section class="qr-page">
+
+    <div class="qr-wrapper">
+
+        <!-- INTRO -->
+        <div class="qr-intro">
+
+            <div class="trust-badge">
+                QR Phishing Detection
+            </div>
+
+            <h1>Detect Hidden Threats in QR Codes</h1>
+
+            <p>
+                QR-based phishing (Quishing) is rapidly increasing as attackers hide malicious links
+                inside QR codes placed in emails, posters, and public spaces.
+            </p>
+
+            <p>
+                PhishGuard AI extracts embedded URLs from QR codes and analyzes them using
+                a hybrid machine learning and rule-based detection system to identify threats instantly.
+            </p>
+
+        </div>
+
+        <!-- QR CARD -->
+        <div class="qr-container">
+
+            <h2>Upload QR Code</h2>
+
+            <form action="/analyze_qr" method="POST" enctype="multipart/form-data" class="qr-upload-box">
+
+                <input type="file" name="qr_image" accept="image/*" required>
+
+                <button type="submit">
+                    Scan QR
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+{% endblock %}

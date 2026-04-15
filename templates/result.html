@@ -1,74 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Analysis Report - PhishGuard AI</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-
-<body>
-   <nav class="navbar">
-        <a href="/" class="logo">
-            <svg class="logo-icon" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2L4 6V11C4 16 7.5 20 12 22C16.5 20 20 16 20 11V6L12 2Z" fill="url(#shieldGradient)" />
-                <path d="M8.5 12.5L11 15L16 9.5" stroke="white" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round" />
-                <defs>
-                    <linearGradient id="shieldGradient" x1="0" y1="0" x2="24" y2="24">
-                        <stop offset="0%" stop-color="#3b82f6" />
-                        <stop offset="100%" stop-color="#2563eb" />
-                    </linearGradient>
-                </defs>
-            </svg>
-
-            <span class="brand">PhishGuard AI</span>
-        </a>
-
-        <div class="nav-right">
-            <div class="nav-links">
-                <a href="/awareness">Awareness</a>
-                <a href="/community">Community</a>
-                <a href="/report">Report</a>
-                <a href="#about">About</a>
-
-
-            </div>
-
-            <div class="separator"></div>
-
-            <div class="profile" onclick="toggleMenu()">
-
-                <!-- USER ICON WITH INITIAL -->
-                <div class="profile-icon">
-                    {% if session.get("username") %}
-                    {{ session.get("username")[0].upper() }}
-                    {% else %}
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                        <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2" />
-                        <path d="M4 20C4 16 8 14 12 14C16 14 20 16 20 20" stroke="currentColor" stroke-width="2" />
-                    </svg>
-                    {% endif %}
-                </div>
-
-                <!-- DROPDOWN -->
-                <div class="profile-menu" id="profileMenu">
-
-                    {% if session.get("user_id") %}
-                    <p class="username">{{ session.get("username") }}</p>
-                    <a href="/community">Community</a>
-                    <a href="/logout">Logout</a>
-                    {% else %}
-                    <a href="/login_page">Login</a>
-                    <a href="/register_page">Register</a>
-                    {% endif %}
-
-                </div>
-
-            </div>
-        </div>
-    </nav>
-
+{% extends "base.html" %}
+{% block title %}Analysis Report - PhishGuard AI{% endblock %}
+{% block content %}
     <section class="result-section">
 
         <div class="result-card">
@@ -114,7 +46,4 @@
         </div>
 
     </section>
-
-</body>
-
-</html>
+{% endblock %}

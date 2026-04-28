@@ -8,9 +8,9 @@ def calculate_rule_risk(features):
         risk_score += 30
         high_severity_count += 1
 
-    # ⚠️ Reduce entropy importance
-    if features["domain_entropy"] > 4.0:   # increased threshold
-        risk_score += 10   # reduced impact
+    # Reduce entropy importance
+    if features["domain_entropy"] > 4.0:  
+        risk_score += 10  
 
     # MEDIUM
     if features["suspicious_tld"]:
@@ -20,7 +20,7 @@ def calculate_rule_risk(features):
         risk_score += 12   # reduced
 
     if not features["has_https"]:
-        risk_score += 5   # reduced (many legit sites still http internally)
+        risk_score += 5  
 
     # LOW
     if features["num_digits"] > 6:

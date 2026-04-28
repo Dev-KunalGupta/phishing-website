@@ -24,7 +24,7 @@ def extract_url_features(url):
 
     parsed = urlparse(url)
 
-    # 🔥 FIX: Proper domain extraction
+    # Domain extraction
     ext = tldextract.extract(url)
     domain = (ext.subdomain + "." + ext.domain + "." + ext.suffix).strip(".")
     root_domain = ext.domain + "." + ext.suffix
@@ -67,10 +67,10 @@ def extract_url_features(url):
     suspicious_tlds = [".xyz", ".tk", ".ml", ".ga", ".cf"]
     features["suspicious_tld"] = 1 if any(root_domain.endswith(tld) for tld in suspicious_tlds) else 0
 
-    # Entropy (only root domain, not full)
+    # Entropy (only for root domain, not full)
     features["domain_entropy"] = calculate_entropy(root_domain)
 
-    # 🔥 FIXED POPULAR DOMAIN FEATURE
+    # POPULAR DOMAIN FEATURE
     features["is_popular_domain"] = is_popular
 
     return features

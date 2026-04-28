@@ -21,7 +21,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 # THEN INIT
 db.init_app(app)
 
-# 🔥 IMPORT MODELS AFTER INIT (CRITICAL)
+# IMPORTING MODELS AFTER INIT
 from models.db_models import User, Post
 
 @app.route("/")
@@ -83,7 +83,7 @@ def register():
 
     return redirect("/login_page")
 
-app.secret_key = "secret123"  # REQUIRED
+app.secret_key = "secret123" 
 
 @app.route("/login", methods=["POST"])
 def login():

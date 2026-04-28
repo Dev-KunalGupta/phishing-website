@@ -3,7 +3,7 @@ import pandas as pd
 
 MODEL_PATH = "models/phishing_model.pkl"
 
-# Load model once (not every request)
+# Load model once
 model = joblib.load(MODEL_PATH)
 
 def predict_ml_probability(features_dict):

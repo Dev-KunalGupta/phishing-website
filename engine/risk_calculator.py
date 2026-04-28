@@ -6,12 +6,12 @@
 #     is_popular = features.get("is_popular_domain", 0)
 #     has_https = features.get("has_https", 0)
 
-#     # ✅ STRONG REPUTATION PROTECTION
+#     # STRONG REPUTATION PROTECTION
 #     if is_popular == 1 and has_https == 1:
 #         ml_weight = 0.3
 #         rule_weight = 0.2
 
-#     # ✅ STRONG SUSPICIOUS BOOST
+#     # STRONG SUSPICIOUS BOOST
 #     if features.get("has_ip", 0):
 #         ml_weight = 0.4
 #         rule_weight = 0.6
@@ -24,7 +24,7 @@
 
 #     final_risk = max(0, min(final_risk, 100))
 
-#     # ✅ BETTER CLASSIFICATION
+#     # BETTER CLASSIFICATION
 #     if final_risk <= 35:
 #         classification = "Safe"
 #     elif final_risk <= 65:
@@ -58,11 +58,11 @@ def calculate_final_risk(ml_probability, rule_score, features,
 
     final_risk = (ml_weight * ml_score) + (rule_weight * rule_score)
 
-    # 🔥 CRITICAL OVERRIDE (Phishing patterns)
+    # CRITICAL OVERRIDE
     if features.get("has_ip", 0) and features.get("suspicious_keyword", 0):
         final_risk = max(final_risk, 75)
 
-    # 🔥 STRONG TRUST OVERRIDE (THIS IS WHAT YOU WERE MISSING)
+    # STRONG TRUST OVERRIDE
     if is_popular == 1 and has_https == 1:
         final_risk = min(final_risk, 25)
 
